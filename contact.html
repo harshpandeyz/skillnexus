@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us — SKILLNEXUS</title>
+    <meta name="description" content="Contact SKILLNEXUS — get in touch for support, questions or course enquiries." />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- NAVBAR (reused across pages) -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">SKILLNEXUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="bg-light py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="h3 mb-1">Contact Us</h1>
+                <p class="text-muted mb-0">Have a question or need help? Fill the form and our team will reply within 24–48 hours.</p>
+            </div>
+            <div class="col-md-4 text-md-end d-none d-md-block">
+                <a href="register.html" class="btn btn-primary">Create Account</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="py-5">
+    <div class="container">
+        <!-- top-level grid: form (8) + quick-contact card (4) on md+; stacked on small -->
+        <div class="row g-4">
+            <!-- CONTACT FORM -->
+            <div class="col-12 col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 mb-3">Send us a message</h2>
+
+                        <!-- Alert placeholder (success/error) -->
+                        <div id="formAlert" class="alert d-none" role="alert" aria-live="polite"></div>
+
+                        <!-- Form: uses Bootstrap validation classes -->
+                        <form id="contactForm" novalidate>
+                            <div class="row g-3">
+                                <!-- Name -->
+                                <div class="col-12 col-md-6">
+                                    <label for="name" class="form-label">Full name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name" required aria-required="true" placeholder="Your full name">
+                                    <div class="invalid-feedback">Please enter your name.</div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-12 col-md-6">
+                                    <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="email" name="email" required aria-required="true" placeholder="you@example.com">
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="col-12 col-md-6">
+                                    <label for="phone" class="form-label">Phone (optional)</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+91 98765 43210" pattern="^\+?\d{7,15}$">
+                                    <div class="form-text">Include country code for faster response (e.g., +91).</div>
+                                </div>
+
+                                <!-- Preferred contact method (radio) -->
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label d-block">Preferred contact method</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="contactMethod" id="contactEmail" value="email" checked>
+                                        <label class="form-check-label" for="contactEmail">Email</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="contactMethod" id="contactPhone" value="phone">
+                                        <label class="form-check-label" for="contactPhone">Phone</label>
+                                    </div>
+                                </div>
+
+                                <!-- Subject (select) -->
+                                <div class="col-12 col-md-6">
+                                    <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                                    <select id="subject" name="subject" class="form-select" required>
+                                        <option value="" selected disabled>Select a subject</option>
+                                        <option value="general">General question</option>
+                                        <option value="support">Technical support</option>
+                                        <option value="billing">Billing / Payment</option>
+                                        <option value="partnership">Partnerships</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a subject.</div>
+                                </div>
+
+                                <!-- Course of interest (datalist) -->
+                                <div class="col-12 col-md-6">
+                                    <label for="course" class="form-label">Course of interest (optional)</label>
+                                    <input class="form-control" list="coursesList" id="course" name="course" placeholder="Start typing or choose...">
+                                    <datalist id="coursesList">
+                                        <option value="Web Development">
+                                        <option value="Python Programming">
+                                        <option value="Digital Marketing">
+                                        <option value="UI/UX Design">
+                                        <option value="Data Analysis">
+                                        <option value="Cloud Fundamentals">
+                                    </datalist>
+                                    <div class="form-text">Helps us route your enquiry to the right instructor.</div>
+                                </div>
+
+                                <!-- Interests (checkbox group) -->
+                                <div class="col-12">
+                                    <label class="form-label d-block">Your interests (check all that apply)</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="newsletter" id="interestNewsletter" name="interests">
+                                            <label class="form-check-label" for="interestNewsletter">Newsletter</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="updates" id="interestUpdates" name="interests">
+                                            <label class="form-check-label" for="interestUpdates">Course updates</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="webinars" id="interestWebinars" name="interests">
+                                            <label class="form-check-label" for="interestWebinars">Webinars</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="career" id="interestCareer" name="interests">
+                                            <label class="form-check-label" for="interestCareer">Career help</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Message (textarea) -->
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Write your message here..."></textarea>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+
+                                <!-- Urgency (select small) and Subscribe toggle -->
+                                <div class="col-12 col-md-6">
+                                    <label for="urgency" class="form-label">Urgency</label>
+                                    <select id="urgency" name="urgency" class="form-select form-select-sm">
+                                        <option value="normal" selected>Normal</option>
+                                        <option value="moderate">Moderate (48 hrs)</option>
+                                        <option value="high">High (24 hrs)</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6 d-flex align-items-center">
+                                    <div class="form-check form-switch ms-md-auto">
+                                        <input class="form-check-input" type="checkbox" id="subscribeSwitch" name="subscribe">
+                                        <label class="form-check-label" for="subscribeSwitch">Subscribe to newsletter</label>
+                                    </div>
+                                </div>
+
+                                <!-- Terms & Submit -->
+                                <div class="col-12">
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="agree" required>
+                                        <label class="form-check-label" for="agree">I agree to be contacted regarding my enquiry. <span class="text-danger">*</span></label>
+                                        <div class="invalid-feedback">You must agree before submitting.</div>
+                                    </div>
+
+                                    <div class="d-flex flex-column flex-sm-row gap-2">
+                                        <button type="submit" class="btn btn-primary">Send message</button>
+                                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                    </div>
+                                </div>
+                            </div> <!-- /row inside form -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUICK CONTACT CARD -->
+            <aside class="col-12 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="h6">Quick contact</h3>
+                        <p class="small text-muted mb-2">Prefer direct contact? Use the details below.</p>
+
+                        <ul class="list-unstyled mb-3 small">
+                            <li><strong>Support:</strong> support@example.com</li>
+                            <li><strong>Phone:</strong> +91 98765 43210</li>
+                            <li><strong>Office:</strong> Online (Remote)</li>
+                        </ul>
+
+                        <div class="mb-3">
+                            <h4 class="h6 mb-1">Office hours</h4>
+                            <p class="small text-muted mb-0">Mon–Fri · 9:00 AM – 6:00 PM IST</p>
+                        </div>
+
+                        <div class="mt-auto">
+                            <a href="register.html" class="btn btn-primary w-100 mb-2">Create account</a>
+                            <a href="index.html" class="btn btn-outline-primary w-100">Browse courses</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div> <!-- /row -->
+    </div> <!-- /container -->
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <small class="mb-2 mb-md-0">© <span id="year-contact"></span> SKILLNEXUS. All rights reserved.</small>
+        <div class="d-flex gap-3">
+            <a href="index.html" class="text-light text-decoration-none">Home</a>
+            <a href="about.html" class="text-light text-decoration-none">About</a>
+            <a href="register.html" class="text-light text-decoration-none">Register</a>
+        </div>
+    </div>
+</footer>
+
+<!-- BOOTSTRAP JS + CUSTOM JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Page-specific script for validation & saving contact data
+     (keeps behavior local for easy testing; you may move to script.js) -->
+<script>
+    // Put current year in footer
+    document.getElementById('year-contact').textContent = new Date().getFullYear();
+
+    (function () {
+      'use strict';
+
+      const contactForm = document.getElementById('contactForm');
+      const formAlert = document.getElementById('formAlert');
+
+      // Utility: show alert message (Bootstrap classes)
+      function showAlert(type, message) {
+        formAlert.className = ''; // clear classes
+        formAlert.classList.add('alert', 'alert-' + type);
+        formAlert.textContent = message;
+        formAlert.classList.remove('d-none');
+        // Auto-hide after 5 seconds
+        setTimeout(() => formAlert.classList.add('d-none'), 5000);
+      }
+
+      // On submit: validate and save to localStorage (demo)
+      contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Use browser Constraint Validation API
+        if (!contactForm.checkValidity()) {
+          // Add Bootstrap validation styles
+          contactForm.classList.add('was-validated');
+          showAlert('danger', 'Please fix the errors in the form and try again.');
+          return;
+        }
+
+        // Collect form values
+        const formData = new FormData(contactForm);
+        const entry = {
+          id: 'c_' + Date.now(),
+          name: formData.get('name') || '',
+          email: formData.get('email') || '',
+          phone: formData.get('phone') || '',
+          contactMethod: formData.get('contactMethod') || 'email',
+          subject: formData.get('subject') || '',
+          course: formData.get('course') || '',
+          interests: Array.from(contactForm.querySelectorAll('input[name="interests"]:checked')).map(cb => cb.value),
+          message: formData.get('message') || '',
+          urgency: formData.get('urgency') || 'normal',
+          subscribe: !!formData.get('subscribe'),
+          createdAt: new Date().toISOString()
+        };
+
+        // Save submission(s) to localStorage (demo; in a real app you'd POST to server)
+        const storageKey = 'lp_contacts';
+        const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        existing.push(entry);
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+
+        // Clear validation styles and reset form
+        contactForm.classList.remove('was-validated');
+        contactForm.reset();
+
+        // Provide user feedback
+        showAlert('success', 'Thanks — your message has been received. We will contact you soon.');
+
+        // OPTIONAL: navigate or highlight something; here we keep user on same page
+        // window.location.href = 'thankyou.html'; // if you create a thank-you page
+      });
+
+      // Reset hides alerts & validation classes
+      contactForm.addEventListener('reset', function () {
+        contactForm.classList.remove('was-validated');
+        formAlert.classList.add('d-none');
+      });
+    })();
+</script>
+
+<!-- Link to global script file (if you keep shared logic there) -->
+<script src="script.js"></script>
+</body>
+</html>

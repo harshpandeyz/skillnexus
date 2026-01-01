@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SKILLNEXUS — Home</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS (your file in the same folder) -->
+    <link rel="stylesheet" href="style.css">
+
+    <meta name="description" content="Responsive Learning Platform — learn web development, Python, digital marketing and more." />
+
+    <!-- Slider-specific styles (keeps everything in one file for easy paste) -->
+    <style>
+        :root{
+        --accent1: #2b2d8f; /* deep indigo */
+        --accent2: #0dcaf0; /* teal */
+        --accent-grad: linear-gradient(135deg,var(--accent1), #4f46e5 50%, var(--accent2));
+        --carousel-height: 300px;
+        --caption-bg: rgba(10,12,40,0.72);
+        --caption-color: #fff;
+        --control-bg: rgba(0,0,0,0.45);
+        }
+
+        /* Slider container */
+        .custom-slider {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(20,20,40,0.12);
+        background: linear-gradient(180deg, rgba(75,85,99,0.03), #fff);
+        }
+        .custom-slider .slider-viewport {
+        overflow: hidden;
+        }
+        .custom-slider .slider-track {
+        display: flex;
+        transition: transform 0.85s cubic-bezier(.22,.9,.32,1);
+        will-change: transform;
+        }
+        .custom-slider .slide {
+        min-width: 100%;
+        position: relative;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        }
+        .custom-slider img {
+        width: 100%;
+        height: var(--carousel-height);
+        object-fit: cover;
+        display: block;
+        }
+
+        /* caption panel */
+        .slide-caption {
+        position: absolute;
+        left: 2rem;
+        top: 40%;
+        transform: translateY(-50%);
+        max-width: 48%;
+        background: var(--caption-bg);
+        color: var(--caption-color);
+        padding: 1.1rem 1.2rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(10,12,30,0.35);
+        backdrop-filter: blur(4px);
+        }
+        .slide-caption h3 { margin: 0 0 .25rem 0; font-size: 1.25rem; }
+        .slide-caption p { margin: 0 0 .6rem 0; color: rgba(255,255,255,0.92); font-size: .95rem; }
+
+        /* Controls */
+        .slider-controls {
+        position: absolute;
+        inset: auto 1rem 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        gap: .5rem;
+        z-index: 10;
+        }
+        .slider-btn {
+        background: var(--control-bg);
+        color: #fff;
+        border: none;
+        padding: .45rem .7rem;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        font-size: .9rem;
+        }
+        .slider-indicators {
+        position: absolute;
+        bottom: .9rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display:flex;
+        gap:.5rem;
+        z-index: 12;
+        }
+        .slider-indicators button {
+        width: 10px; height: 10px; border-radius: 50%; border: none;
+        background: rgba(255,255,255,0.55);
+        transition: transform .18s, background .18s;
+        }
+        .slider-indicators button.active {
+        transform: scale(1.25);
+        background: var(--accent2);
+        box-shadow: 0 4px 12px rgba(13,110,253,0.18);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+        .slide-caption { max-width: 70%; left: 1rem; padding:.9rem; top: 50%; }
+        }
+        @media (max-width: 576px) {
+        .slide-caption { display: none; }
+        .custom-slider img { height: 200px; }
+        .slider-controls { inset: auto .5rem .5rem .5rem; }
+        }
+    </style>
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--accent1);" aria-label="Main navigation">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="index.html">SKILLNEXUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active text-white" aria-current="page" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="cart.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CUSTOM RIGHT-TO-LEFT SLIDER -->
+<section class="py-4 container">
+    <div class="custom-slider mx-auto" style="max-width:1200px;">
+        <div class="slider-viewport">
+            <div class="slider-track" id="sliderTrack">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <img src="images/banner1.png" alt="Popular courses banner">
+                    <div class="slide-caption">
+                        <h3>Most Popular Courses</h3>
+                        <p>Web Dev · Python · Digital Marketing — join thousands learning practical skills.</p>
+                        <div class="d-flex gap-2">
+                            <a href="#courses" class="btn btn-sm" style="background:var(--accent2); color:#04263b;">Browse</a>
+                            <a href="register.html" class="btn btn-sm btn-outline-light">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <img src="images/banner2.jpg" alt="Web development course">
+                    <div class="slide-caption">
+                        <h3>New: Project-based Web Path</h3>
+                        <p>Build 3 real projects — responsive portfolio, SPA, and a backend API.</p>
+                        <div class="d-flex gap-2">
+                            <a href="register.html" class="btn btn-sm" style="background:var(--accent2); color:#04263b;">Enroll Now</a>
+                            <a href="about.html" class="btn btn-sm btn-outline-light">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <img src="images/banner3.jpg" alt="Python course">
+                    <div class="slide-caption">
+                        <h3>Latest: Data & Cloud Courses</h3>
+                        <p>Data Analysis and Cloud Fundamentals launched — limited seats available.</p>
+                        <div class="d-flex gap-2">
+                            <a href="contact.html" class="btn btn-sm" style="background:var(--accent2); color:#04263b;">Know More</a>
+                            <a href="cart.html" class="btn btn-sm btn-outline-light">View Cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clone first slide for smooth infinite loop (created by JS at runtime if preferred, duplicated here also safe) -->
+                <div class="slide">
+                    <img src="images/hero.png" alt="Popular courses banner">
+                    <div class="slide-caption">
+                        <h3>Most Popular Courses</h3>
+                        <p>Web Dev · Python · Digital Marketing — join thousands learning practical skills.</p>
+                        <div class="d-flex gap-2">
+                            <a href="#courses" class="btn btn-sm" style="background:var(--accent2); color:#04263b;">Browse</a>
+                            <a href="register.html" class="btn btn-sm btn-outline-light">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prev/Next & Indicators -->
+        <div class="slider-controls">
+            <button id="prevBtn" class="slider-btn" aria-label="Previous slide">‹ Prev</button>
+            <button id="nextBtn" class="slider-btn" aria-label="Next slide">Next ›</button>
+        </div>
+
+        <div class="slider-indicators" id="sliderIndicators" aria-hidden="false">
+            <button data-slide="0" class="active" aria-label="Go to slide 1"></button>
+            <button data-slide="1" aria-label="Go to slide 2"></button>
+            <button data-slide="2" aria-label="Go to slide 3"></button>
+        </div>
+    </div>
+</section>
+
+<!-- HERO (kept for consistency) -->
+<header class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="display-5 fw-bold">Learn new skills. Grow your future.</h1>
+                <p class="lead mb-4">Interactive courses, structured paths, and practical projects — accessible on any device.</p>
+                <p>
+                    <a class="btn btn-primary btn-lg me-2" href="register.html" role="button">Get Started</a>
+                    <a class="btn btn-outline-primary btn-lg" href="#courses" role="button">Explore Courses</a>
+                </p>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <img src="images/herobanner.png" alt="Students learning online" class="img-fluid rounded shadow-sm" style="max-height: 300px; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- COURSES SECTION (unchanged) -->
+<main class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="courses" class="h3 m-0">Popular Courses</h2>
+            <p class="text-muted mb-0">Browse our most-enrolled courses</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- course cards (same as before) -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course1.jpg" class="card-img-top" alt="Web Development" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Web Development</h5>
+                        <p class="card-text">Learn HTML, CSS, JavaScript, and Bootstrap to build responsive websites.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹499</span>
+                                <small class="text-muted"> · 20 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-web" data-title="Web Development" data-price="499">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course2.jpg" class="card-img-top" alt="Python Programming" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Python Programming</h5>
+                        <p class="card-text">Master Python for data science, automation, and web development.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹599</span>
+                                <small class="text-muted"> · 25 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-python" data-title="Python Programming" data-price="599">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course3.jpg" class="card-img-top" alt="Digital Marketing" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Digital Marketing</h5>
+                        <p class="card-text">Learn SEO, social media strategies, and analytics to grow brands online.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹399</span>
+                                <small class="text-muted"> · 12 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-dm" data-title="Digital Marketing" data-price="399">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- additional cards... -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course4.jpg" class="card-img-top" alt="UI/UX Design" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">UI/UX Design</h5>
+                        <p class="card-text">Design beautiful interfaces and smooth user experiences.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹449</span>
+                                <small class="text-muted"> · 18 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-uiux" data-title="UI/UX Design" data-price="449">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course5.jpg" class="card-img-top" alt="Data Analysis" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Data Analysis</h5>
+                        <p class="card-text">Learn data cleaning, visualization, and insights using Excel & Python.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹549</span>
+                                <small class="text-muted"> · 22 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-data" data-title="Data Analysis" data-price="549">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100">
+                    <img src="images/course6.jpg" class="card-img-top" alt="Cloud Fundamentals" style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Cloud Fundamentals</h5>
+                        <p class="card-text">Start with cloud basics, deployments and services on popular providers.</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold">₹349</span>
+                                <small class="text-muted"> · 10 hours</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary enroll-btn" data-id="course-cloud" data-title="Cloud Fundamentals" data-price="349">Enroll</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div> <!-- /row -->
+    </div> <!-- /container -->
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <small class="mb-2 mb-md-0">© <span id="year"></span> SKILLNEXUS. All rights reserved.</small>
+        <div class="d-flex gap-3">
+            <a href="about.html" class="text-light text-decoration-none">About</a>
+            <a href="contact.html" class="text-light text-decoration-none">Contact</a>
+            <a href="register.html" class="text-light text-decoration-none">Register</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Slider JS (right-to-left auto-play, indicators & controls) -->
+<script>
+    (function(){
+      const track = document.getElementById('sliderTrack');
+      const slides = track.querySelectorAll('.slide');
+      const indicators = document.getElementById('sliderIndicators').querySelectorAll('button');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      let index = 0;                         // current slide index (0..n-1)
+      const realSlides = slides.length - 1;  // last one is clone (we duplicated first slide in markup)
+      let intervalMs = 4200;
+      let animating = false;
+      let timer = null;
+
+      // Set initial transform (we want to show slide 0)
+      track.style.transform = 'translateX(0%)';
+
+      function goTo(i, animate = true) {
+        if (animating) return;
+        animating = true;
+        if (!animate) track.style.transition = 'none';
+        else track.style.transition = 'transform 0.85s cubic-bezier(.22,.9,.32,1)';
+
+        index = i;
+        track.style.transform = `translateX(-${index * 100}%)`;
+
+        // update indicators (only for real slides)
+        updateIndicators(index % realSlides);
+
+        // After transition handle clone-jump
+        if (animate) {
+          track.addEventListener('transitionend', onTransitionEnd, { once: true });
+        } else {
+          animating = false;
+        }
+      }
+
+      function onTransitionEnd() {
+        // If we've moved to clone (index == realSlides), jump to 0 without animation
+        if (index >= realSlides) {
+          track.style.transition = 'none';
+          index = 0;
+          track.style.transform = `translateX(0%)`;
+        }
+        // If index < 0 (shouldn't happen here), handle accordingly
+        animating = false;
+      }
+
+      function next() {
+        if (animating) return;
+        goTo(index + 1, true);
+      }
+      function prev() {
+        if (animating) return;
+        // If we are at 0, jump to clone position instantly then move to last real slide
+        if (index === 0) {
+          // instantly jump to clone (last position) (we need to go to realSlides - 1)
+          track.style.transition = 'none';
+          index = realSlides;
+          track.style.transform = `translateX(-${index * 100}%)`;
+          // force reflow then animate to previous
+          void track.offsetWidth;
+          goTo(realSlides - 1, true);
+        } else {
+          goTo(index - 1, true);
+        }
+      }
+
+      function updateIndicators(activeIdx) {
+        indicators.forEach((btn, i) => {
+          btn.classList.toggle('active', i === activeIdx);
+        });
+      }
+
+      // indicator clicks
+      indicators.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+          // map indicator to actual slide index (0..realSlides-1)
+          goTo(i, true);
+          resetTimer();
+        });
+      });
+
+      nextBtn.addEventListener('click', () => { next(); resetTimer(); });
+      prevBtn.addEventListener('click', () => { prev(); resetTimer(); });
+
+      // Auto-play
+      function startTimer() {
+        stopTimer();
+        timer = setInterval(() => next(), intervalMs);
+      }
+      function stopTimer() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+      function resetTimer() { stopTimer(); startTimer(); }
+
+      // Pause on hover
+      const sliderWrap = document.querySelector('.custom-slider');
+      sliderWrap.addEventListener('mouseenter', stopTimer);
+      sliderWrap.addEventListener('mouseleave', startTimer);
+
+      // Start autoplay
+      startTimer();
+
+      // ensure indicators reflect initial state
+      updateIndicators(0);
+
+      // accessibility: keyboard left/right
+      sliderWrap.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { prev(); resetTimer(); }
+        if (e.key === 'ArrowRight') { next(); resetTimer(); }
+      });
+    })();
+</script>
+
+<!-- Inline script: small UX niceties and cart handling (enqueue previously provided code if needed) -->
+<script>
+    // Insert current year into footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Add course to localStorage cart (keeps original behavior)
+    document.addEventListener('DOMContentLoaded', function () {
+      const enrollButtons = document.querySelectorAll('.enroll-btn');
+
+      enrollButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const id = this.dataset.id;
+          const title = this.dataset.title;
+          const price = parseFloat(this.dataset.price);
+
+          const cart = JSON.parse(localStorage.getItem('lp_cart') || '[]');
+
+          const existing = cart.find(item => item.id === id);
+          if (existing) {
+            existing.qty += 1;
+            existing.total = existing.qty * existing.price;
+          } else {
+            cart.push({
+              id: id,
+              title: title,
+              price: price,
+              qty: 1,
+              total: price
+            });
+          }
+
+          localStorage.setItem('lp_cart', JSON.stringify(cart));
+          const goToCart = confirm(title + " added to cart. Go to cart?");
+          if (goToCart) {
+            window.location.href = 'cart.html';
+          }
+        });
+      });
+    });
+</script>
+
+<!-- Custom site script (your global logic) -->
+<script src="script.js"></script>
+</body>
+</html>

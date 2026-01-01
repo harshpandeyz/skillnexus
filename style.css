@@ -1,0 +1,211 @@
+/* =========================
+   style.css — LearningPlatform
+   =========================
+   Purpose: custom styles and Bootstrap overrides for the project.
+   Place this file next to your HTML files (same folder as referenced in pages).
+*/
+
+/* ---------- CSS variables (easy theme tweaks) ---------- */
+:root{
+  --brand: #0d6efd;          /* primary brand color (matches Bootstrap .btn-primary) */
+  --brand-dark: #0a58ca;
+  --muted: #6c757d;
+  --bg-soft: #f8f9fa;
+  --card-radius: 12px;
+  --max-content-width: 1200px;
+  --container-padding: 1rem;
+  --focus-ring: rgba(13, 110, 253, 0.25);
+  --shadow-soft: 0 6px 18px rgba(20,20,40,0.06);
+  --shadow-strong: 0 8px 30px rgba(20,20,40,0.12);
+}
+
+/* ---------- Base typography & body ---------- */
+html, body {
+  height: 100%;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #222;
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+}
+
+/* Ensure consistent container max width for large displays */
+.container {
+  max-width: var(--max-content-width);
+}
+
+/* ---------- Headings ---------- */
+h1, h2, h3, h4, h5 {
+  color: var(--brand-dark);
+  margin-top: 0;
+}
+.lead { color: #333; }
+
+/* ---------- Navbar tweaks ---------- */
+/* Slightly taller navbar and clearer brand */
+.navbar {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  box-shadow: 0 2px 8px rgba(10,10,25,0.04);
+}
+.navbar-brand {
+  letter-spacing: 0.2px;
+  font-size: 1.1rem;
+}
+
+/* Make the toggler icon more visible on light backgrounds */
+.navbar-light .navbar-toggler-icon,
+.navbar-dark .navbar-toggler-icon {
+  filter: brightness(1.2);
+}
+
+/* ---------- Hero styles ---------- */
+header.bg-light {
+  background: linear-gradient(180deg, var(--bg-soft), #ffffff);
+}
+header img {
+  border-radius: 8px;
+}
+
+/* ---------- Card styles ---------- */
+.card {
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
+  border: 0;
+}
+
+/* Card images: consistent cropping */
+.card-img-top {
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+}
+
+/* Make card titles slightly larger */
+.card-title {
+  font-weight: 600;
+}
+
+/* ---------- Buttons ---------- */
+/* Subtle custom primary button hover + focus */
+.btn-primary {
+  background-color: var(--brand);
+  border-color: var(--brand);
+  transition: transform 0.12s ease, box-shadow 0.12s;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--brand-dark);
+  border-color: var(--brand-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+.btn-outline-primary {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.btn-outline-primary:hover {
+  background-color: rgba(13,110,253,0.06);
+}
+
+/* Small utility for ghost link buttons */
+.btn-link {
+  color: var(--muted);
+}
+
+/* ---------- Forms ---------- */
+/* Slightly larger form controls for touch devices */
+.form-control {
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Input focus: clear visible outline for keyboard users */
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem var(--focus-ring);
+  border-color: var(--brand);
+  outline: none;
+}
+
+/* Validation visuals using Bootstrap classes are preserved */
+/* Reduce default invalid-feedback font-size for compactness */
+.invalid-feedback { font-size: 0.9rem; }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+footer a { color: rgba(255,255,255,0.9); }
+footer small { opacity: 0.9; }
+
+/* ---------- Utilities ---------- */
+/* Vertical rhythm helper */
+.py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+/* Responsive image utility similar to Bootstrap but with cover */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Small muted text used across the site */
+.text-muted { color: var(--muted) !important; }
+
+/* ---------- Accessibility: show outline only for keyboard nav ---------- */
+.user-is-tabbing :focus {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive tweaks (media queries) ---------- */
+/* Larger touch targets on smaller screens */
+@media (max-width: 768px) {
+  .card-img-top { height: 180px; object-fit: cover; }
+  .navbar-brand { font-size: 1rem; }
+  .lead { font-size: 1rem; }
+  header .display-5 { font-size: 1.6rem; }
+}
+
+/* Improve layout on very large screens */
+@media (min-width: 1400px) {
+  .container { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Course card specific: keep equal height columns */
+.card.h-100 { display: flex; flex-direction: column; }
+.card.h-100 .card-body { flex: 1 1 auto; }
+
+/* ---------- Small form & table tweaks for cart ---------- */
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Input group small reduce width on mobile */
+.input-group-sm .form-control, .input-group-sm .btn {
+  padding: 0.35rem 0.5rem;
+}
+
+/* ---------- Small helpers for empty states ---------- */
+.alert-info a.alert-link { color: var(--brand-dark); font-weight: 600; }
+
+/* ---------- Minor visual polish ---------- */
+/* Rounded corners for small images (thumbnails) */
+img {
+  border-radius: 6px;
+}
+
+/* Card hover effect for clickable cards */
+.card:hover {
+  transform: translateY(-4px);
+  transition: transform 0.18s ease;
+  box-shadow: var(--shadow-strong);
+}
+
+/* ---------- Print styles (optional) ---------- */
+@media print {
+  nav, footer, .btn, .input, .form-control { display: none !important; }
+  .container { width: 100%; }
+  body { background: white; color: black; }
+}
+
+/* ========== End of style.css ========== */
