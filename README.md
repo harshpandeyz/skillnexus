@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a30c3a90-d909-4f40-b4cb-cc03e71bcbc5" alt="SkillNexus preview" width="100%" />
-</p>
+
 
 # 🧭 SkillNexus — Responsive Learning Platform
 
@@ -8,7 +6,9 @@ Personal, responsive learning platform built with **HTML5**, **CSS3**, **JavaScr
 A student project that demonstrates responsive UI, forms, client-side cart simulation and basic demo authentication.
 
 **Open the project (local):** [`./src/index.html`](./src/index.html) — or host the `src` folder with GitHub Pages / Vercel / Netlify.
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a30c3a90-d909-4f40-b4cb-cc03e71bcbc5" alt="SkillNexus preview" width="100%" />
+</p>
 ---
 
 ## 📌 Tech Stack
@@ -56,12 +56,6 @@ A student project that demonstrates responsive UI, forms, client-side cart simul
 ![Login](https://github.com/user-attachments/assets/21c7f7a4-8f7e-4c1d-b3ea-3f81577bee09)
 
 ---
-
-## 🚀 How to run (Local)
-1. Clone the repo:  
-   ```bash
-   git clone https://github.com/<your-username>/skillnexus.git
-
 
 
 
