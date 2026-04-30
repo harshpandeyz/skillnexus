@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register — SKILLNEXUS</title>
+    <meta name="description" content="User registration for SKILLNEXUS — responsive form with validation." />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- NAVBAR (shared) -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">SKILLNEXUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="bg-light py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="h4 mb-1">Create your account</h1>
+                <p class="text-muted mb-0">Register to enroll in courses and track your progress — works on desktop, tablet & mobile.</p>
+            </div>
+            <div class="col-md-4 text-md-end d-none d-md-block">
+                <a href="login.html" class="btn btn-outline-primary">Already have an account?</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="py-5">
+    <div class="container">
+        <!-- Card wrapper -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 mb-3">Registration Form</h2>
+                        <p class="small text-muted mb-4">All fields marked with <span class="text-danger">*</span> are required.</p>
+
+                        <!-- Form: responsive inline on md+, stacked on small -->
+                        <form id="registerForm" novalidate>
+                            <div class="row g-3">
+                                <!-- Full name -->
+                                <div class="col-12 col-md-6">
+                                    <label for="fullName" class="form-label">Full name <span class="text-danger">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Your full name" required>
+                                    <div class="invalid-feedback">Please enter your full name.</div>
+                                </div>
+
+                                <!-- Username -->
+                                <div class="col-12 col-md-6">
+                                    <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                                    <input type="text" id="username" name="username" class="form-control" placeholder="Choose a username" required pattern="^[A-Za-z0-9_.-]{3,20}$">
+                                    <div class="form-text">3–20 characters: letters, numbers, _ . -</div>
+                                    <div class="invalid-feedback">Choose a valid username (3–20 characters).</div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-12 col-md-6">
+                                    <label for="emailReg" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" id="emailReg" name="email" class="form-control" placeholder="you@example.com" required>
+                                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="col-12 col-md-6">
+                                    <label for="phoneReg" class="form-label">Phone (optional)</label>
+                                    <input type="tel" id="phoneReg" name="phone" class="form-control" placeholder="+91 98765 43210" pattern="^\+?\d{7,15}$">
+                                    <div class="invalid-feedback">Enter a valid phone number (with country code if possible).</div>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="col-12 col-md-6">
+                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" minlength="6" required>
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePwd" aria-label="Show or hide password">Show</button>
+                                    </div>
+                                    <div class="form-text">Minimum 6 characters.</div>
+                                    <div class="invalid-feedback">Please enter a password (min 6 characters).</div>
+                                </div>
+
+                                <!-- Confirm password -->
+                                <div class="col-12 col-md-6">
+                                    <label for="confirmPassword" class="form-label">Confirm password <span class="text-danger">*</span></label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Re-type password" minlength="6" required>
+                                    <div class="invalid-feedback">Passwords must match.</div>
+                                </div>
+
+                                <!-- Gender (radio) -->
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label d-block">Gender</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" checked>
+                                        <label class="form-check-label" for="genderMale">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
+                                        <label class="form-check-label" for="genderFemale">Female</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other">
+                                        <label class="form-check-label" for="genderOther">Other</label>
+                                    </div>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="col-12 col-md-6">
+                                    <label for="dob" class="form-label">Date of birth</label>
+                                    <input type="date" id="dob" name="dob" class="form-control" max="">
+                                    <div class="form-text">Optional — used to personalize your experience.</div>
+                                </div>
+
+                                <!-- Country (select) -->
+                                <div class="col-12 col-md-6">
+                                    <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                                    <select id="country" name="country" class="form-select" required>
+                                        <option value="" disabled selected>Choose your country</option>
+                                        <option value="India">India</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select your country.</div>
+                                </div>
+
+                                <!-- State/City (datalist) -->
+                                <div class="col-12 col-md-6">
+                                    <label for="city" class="form-label">State / City (optional)</label>
+                                    <input class="form-control" list="citiesList" id="city" name="city" placeholder="Select or type...">
+                                    <datalist id="citiesList">
+                                        <option value="Mumbai">
+                                        <option value="Delhi">
+                                        <option value="Bengaluru">
+                                        <option value="Kolkata">
+                                        <option value="Chennai">
+                                        <option value="Hyderabad">
+                                    </datalist>
+                                </div>
+
+                                <!-- Preferred course (select multiple small) -->
+                                <div class="col-12">
+                                    <label for="preferred" class="form-label">Preferred course categories (optional)</label>
+                                    <select id="preferred" name="preferred" class="form-select" multiple>
+                                        <option value="web">Web Development</option>
+                                        <option value="python">Python / Data</option>
+                                        <option value="design">Design / UIUX</option>
+                                        <option value="marketing">Digital Marketing</option>
+                                        <option value="cloud">Cloud / DevOps</option>
+                                    </select>
+                                    <div class="form-text">Hold Ctrl (or Command) to select multiple on desktop.</div>
+                                </div>
+
+                                <!-- Terms checkbox -->
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                        <label class="form-check-label" for="agreeTerms">I agree to the terms and privacy policy. <span class="text-danger">*</span></label>
+                                        <div class="invalid-feedback">You must agree before registering.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="col-12 d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">Create account</button>
+                                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                    <a href="login.html" class="btn btn-link ms-auto">Sign in instead</a>
+                                </div>
+                            </div> <!-- /row -->
+                        </form>
+
+                        <!-- Success / error message placeholder -->
+                        <div id="regMessage" class="alert d-none mt-3" role="alert" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <small class="mb-2 mb-md-0">© <span id="year-register"></span> SKILLNEXUS. All rights reserved.</small>
+        <div class="d-flex gap-3">
+            <a href="index.html" class="text-light text-decoration-none">Home</a>
+            <a href="contact.html" class="text-light text-decoration-none">Contact</a>
+            <a href="login.html" class="text-light text-decoration-none">Login</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Page-specific script: validation, save to localStorage, password toggle -->
+<script>
+    // Footer year
+    document.getElementById('year-register').textContent = new Date().getFullYear();
+
+    (function () {
+      'use strict';
+
+      const STORAGE_KEY = 'lp_users'; // demo storage for registered users
+      const form = document.getElementById('registerForm');
+      const pwd = document.getElementById('password');
+      const confirmPwd = document.getElementById('confirmPassword');
+      const toggleBtn = document.getElementById('togglePwd');
+      const messageBox = document.getElementById('regMessage');
+      const dobInput = document.getElementById('dob');
+
+      // Set max date for DOB to today (prevents future dates)
+      if (dobInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dobInput.setAttribute('max', today);
+      }
+
+      // Toggle show/hide password
+      toggleBtn.addEventListener('click', function () {
+        if (pwd.type === 'password') {
+          pwd.type = 'text';
+          confirmPwd.type = 'text';
+          toggleBtn.textContent = 'Hide';
+        } else {
+          pwd.type = 'password';
+          confirmPwd.type = 'password';
+          toggleBtn.textContent = 'Show';
+        }
+      });
+
+      // Helper: show a message
+      function showMessage(type, text) {
+        messageBox.className = ''; // reset classes
+        messageBox.classList.add('alert', 'alert-' + type);
+        messageBox.textContent = text;
+        messageBox.classList.remove('d-none');
+        // hide after 5 seconds
+        setTimeout(() => messageBox.classList.add('d-none'), 5000);
+      }
+
+      // Validate password match
+      function passwordsMatch() {
+        return pwd.value === confirmPwd.value;
+      }
+
+      // Save user to localStorage (demo)
+      function saveUser(userObj) {
+        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        existing.push(userObj);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      }
+
+      // Form submit handler
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Standard HTML5 validation
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          showMessage('danger', 'Please fix the highlighted errors and try again.');
+          return;
+        }
+
+        // Passwords match check
+        if (!passwordsMatch()) {
+          confirmPwd.setCustomValidity('Passwords do not match');
+          form.classList.add('was-validated');
+          showMessage('danger', 'Passwords do not match. Please confirm your password.');
+          // remove custom validity after showing
+          setTimeout(() => confirmPwd.setCustomValidity(''), 2000);
+          return;
+        }
+
+        // Build user object (do NOT store plaintext passwords in production — this is demo-only)
+        const formData = new FormData(form);
+        const preferred = Array.from(document.getElementById('preferred').selectedOptions).map(o => o.value);
+
+        const user = {
+          id: 'u_' + Date.now(),
+          fullName: formData.get('fullName'),
+          username: formData.get('username'),
+          email: formData.get('email'),
+          phone: formData.get('phone') || '',
+          gender: formData.get('gender') || '',
+          dob: formData.get('dob') || '',
+          country: formData.get('country') || '',
+          city: formData.get('city') || '',
+          preferred: preferred,
+          createdAt: new Date().toISOString()
+          // NOTE: password intentionally omitted from stored object in this demo for privacy.
+        };
+
+        // Demo: check for duplicate username or email
+        const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const dup = users.find(u => u.username === user.username || u.email === user.email);
+        if (dup) {
+          showMessage('warning', 'Username or email already registered. Try a different one or login.');
+          return;
+        }
+
+        // Save user (demo)
+        saveUser(user);
+
+        // Reset form & feedback
+        form.reset();
+        form.classList.remove('was-validated');
+        showMessage('success', 'Registration successful! You can now sign in.');
+
+        // Optionally redirect to login page after short delay
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1200);
+      });
+
+      // Reset handler: clear validation
+      form.addEventListener('reset', function () {
+        form.classList.remove('was-validated');
+        messageBox.classList.add('d-none');
+      });
+
+    })();
+</script>
+
+<!-- Link to global script.js if you prefer to centralize scripts -->
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cart — SKILLNEXUS</title>
+    <meta name="description" content="Your cart — selected courses for SKILLNEXUS." />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">SKILLNEXUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="cart.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="bg-light py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="h4 mb-1">Your Cart</h1>
+                <p class="text-muted mb-0">Review courses you have selected. Update quantities or remove items before checkout.</p>
+            </div>
+            <div class="col-md-4 text-md-end d-none d-md-block">
+                <a href="index.html" class="btn btn-outline-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="py-5">
+    <div class="container">
+        <!-- Controls -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <button id="clearCartBtn" class="btn btn-sm btn-outline-danger">Clear Cart</button>
+            </div>
+            <div>
+                <a href="index.html" class="btn btn-sm btn-outline-primary me-2 d-md-none">Continue Shopping</a>
+                <button id="checkoutBtn" class="btn btn-primary btn-sm">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <!-- If cart empty -->
+        <div id="emptyState" class="alert alert-info d-none" role="alert">
+            Your cart is empty. <a href="index.html" class="alert-link">Browse courses</a> to add items.
+        </div>
+
+        <!-- Responsive table for md+ -->
+        <div id="cartTableWrapper" class="table-responsive mb-4 d-none d-md-block">
+            <table class="table align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Course</th>
+                    <th scope="col" class="text-end">Price</th>
+                    <th scope="col" style="width:130px" class="text-center">Quantity</th>
+                    <th scope="col" class="text-end">Total</th>
+                    <th scope="col" class="text-center">Remove</th>
+                </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                <!-- JS will inject rows here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Card list for small screens -->
+        <div id="cartCards" class="row g-3 d-md-none mb-4">
+            <!-- JS will inject cards here -->
+        </div>
+
+        <!-- Summary -->
+        <div class="card shadow-sm">
+            <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                <div class="text-muted small">You can update quantities directly in the cart. Prices shown in INR.</div>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="text-end">
+                        <div class="small text-muted">Subtotal</div>
+                        <div id="subtotal" class="h5 mb-0">₹0.00</div>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="text-end">
+                        <div class="small text-muted">GST (18%)</div>
+                        <div id="tax" class="h6 mb-0">₹0.00</div>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="text-end">
+                        <div class="small text-muted">Grand Total</div>
+                        <div id="grandTotal" class="h5 mb-0">₹0.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- /container -->
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <small class="mb-2 mb-md-0">© <span id="year-cart"></span> SKILLNEXUS. All rights reserved.</small>
+        <div class="d-flex gap-3">
+            <a href="index.html" class="text-light text-decoration-none">Home</a>
+            <a href="contact.html" class="text-light text-decoration-none">Contact</a>
+            <a href="register.html" class="text-light text-decoration-none">Register</a>
+        </div>
+    </div>
+</footer>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Inline JS: cart rendering & interaction -->
+<script>
+    // Display current year in footer
+    document.getElementById('year-cart').textContent = new Date().getFullYear();
+
+    /**
+     * Cart structure in localStorage (lp_cart):
+     * [
+     *   { id: 'course-web', title: 'Web Development', price: 499, qty: 1, total: 499 },
+     *   ...
+     * ]
+     */
+
+    const STORAGE_KEY = 'lp_cart';
+
+    // Read cart from localStorage (returns array)
+    function loadCart() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        console.error('Failed to parse cart from localStorage', e);
+        return [];
+      }
+    }
+
+    // Save cart to localStorage
+    function saveCart(cart) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    // Calculate subtotal, tax (18%), grand total
+    function calculateTotals(cart) {
+      // Subtotal is sum of item totals
+      const subtotal = cart.reduce((acc, item) => acc + (Number(item.total) || 0), 0);
+      // tax = 18% of subtotal
+      const tax = +(subtotal * 0.18).toFixed(2);
+      const grandTotal = +(subtotal + tax).toFixed(2);
+      return { subtotal: +subtotal.toFixed(2), tax, grandTotal };
+    }
+
+    // Render cart table (md+)
+    function renderTable(cart) {
+      const tbody = document.getElementById('cartTableBody');
+      tbody.innerHTML = '';
+
+      cart.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.dataset.id = item.id;
+
+        tr.innerHTML = `
+          <td>
+            <div class="d-flex align-items-center">
+              <img src="images/${item.id}.jpg" alt="${escapeHtml(item.title)}" style="width:72px; height:54px; object-fit:cover; border-radius:6px; margin-right:12px;">
+              <div>
+                <div class="fw-bold">${escapeHtml(item.title)}</div>
+                <div class="small text-muted">Course ID: ${escapeHtml(item.id)}</div>
+              </div>
+            </div>
+          </td>
+          <td class="text-end">₹${Number(item.price).toFixed(2)}</td>
+          <td class="text-center">
+            <div class="input-group input-group-sm justify-content-center" style="max-width:120px;">
+              <button class="btn btn-outline-secondary btn-sm qty-decrease" type="button" aria-label="Decrease quantity">−</button>
+              <input type="number" min="1" class="form-control text-center qty-input" value="${Number(item.qty)}" aria-label="Quantity for ${escapeHtml(item.title)}">
+              <button class="btn btn-outline-secondary btn-sm qty-increase" type="button" aria-label="Increase quantity">+</button>
+            </div>
+          </td>
+          <td class="text-end">₹${Number(item.total).toFixed(2)}</td>
+          <td class="text-center">
+            <button class="btn btn-outline-danger btn-sm remove-item" aria-label="Remove ${escapeHtml(item.title)}">Remove</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render cart cards (mobile)
+    function renderCards(cart) {
+      const container = document.getElementById('cartCards');
+      container.innerHTML = '';
+
+      cart.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'col-12';
+        col.innerHTML = `
+          <div class="card shadow-sm">
+            <div class="card-body d-flex gap-3">
+              <img src="images/${item.id}.jpg" alt="${escapeHtml(item.title)}" style="width:96px; height:72px; object-fit:cover; border-radius:6px;">
+              <div class="flex-grow-1 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <div class="fw-bold">${escapeHtml(item.title)}</div>
+                    <div class="small text-muted">Course ID: ${escapeHtml(item.id)}</div>
+                  </div>
+                  <div class="text-end">
+                    <div class="fw-bold">₹${Number(item.price).toFixed(2)}</div>
+                    <div class="small text-muted">each</div>
+                  </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-between align-items-center">
+                  <div class="input-group input-group-sm" style="max-width:130px;">
+                    <button class="btn btn-outline-secondary btn-sm qty-decrease" type="button">−</button>
+                    <input type="number" min="1" class="form-control text-center qty-input" value="${Number(item.qty)}">
+                    <button class="btn btn-outline-secondary btn-sm qty-increase" type="button">+</button>
+                  </div>
+                  <div class="text-end">
+                    <div class="fw-bold">₹${Number(item.total).toFixed(2)}</div>
+                    <button class="btn btn-link btn-sm text-danger remove-item">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    // Escape HTML to prevent injection in case localStorage is tampered
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // Update totals in summary area
+    function updateSummary(cart) {
+      const totals = calculateTotals(cart);
+      document.getElementById('subtotal').textContent = `₹${totals.subtotal.toFixed(2)}`;
+      document.getElementById('tax').textContent = `₹${totals.tax.toFixed(2)}`;
+      document.getElementById('grandTotal').textContent = `₹${totals.grandTotal.toFixed(2)}`;
+    }
+
+    // Re-render everything and attach handlers
+    function refreshCartUI() {
+      const cart = loadCart();
+
+      // Show/hide empty state
+      const emptyState = document.getElementById('emptyState');
+      emptyState.classList.toggle('d-none', cart.length > 0);
+
+      // Render table and cards
+      renderTable(cart);
+      renderCards(cart);
+
+      // Update summary
+      updateSummary(cart);
+
+      // Attach event listeners for quantity buttons, inputs, remove buttons
+      attachCartHandlers();
+    }
+
+    // Attach event handlers using event delegation
+    function attachCartHandlers() {
+      // Table body and card container
+      const tableBody = document.getElementById('cartTableBody');
+      const cardsContainer = document.getElementById('cartCards');
+
+      // Shared handler: clicks in table
+      tableBody.addEventListener('click', tableClickHandler);
+      cardsContainer.addEventListener('click', tableClickHandler);
+
+      // Also listen for input change (quantity typed)
+      tableBody.addEventListener('change', qtyInputChangeHandler);
+      cardsContainer.addEventListener('change', qtyInputChangeHandler);
+    }
+
+    // Handler for clicks (increase/decrease/remove)
+    function tableClickHandler(e) {
+      const target = e.target;
+
+      // Find the closest row/card and item id
+      const row = target.closest('tr');
+      const card = target.closest('.card');
+      let itemId = null;
+
+      if (row && row.dataset.id) itemId = row.dataset.id;
+      else if (card) {
+        // card-based display: find course id by looking at small text in the card
+        const idText = card.querySelector('.small.text-muted');
+        if (idText) {
+          const match = idText.textContent.match(/Course ID:\s*(.+)/i);
+          if (match) itemId = match[1].trim();
+        }
+      }
+
+      if (!itemId) return; // not an actionable click
+
+      // Decrease
+      if (target.classList.contains('qty-decrease')) {
+        changeQty(itemId, -1);
+        return;
+      }
+
+      // Increase
+      if (target.classList.contains('qty-increase')) {
+        changeQty(itemId, +1);
+        return;
+      }
+
+      // Remove
+      if (target.classList.contains('remove-item')) {
+        removeItem(itemId);
+        return;
+      }
+    }
+
+    // Handler for direct qty input change
+    function qtyInputChangeHandler(e) {
+      const input = e.target;
+      if (!input.classList.contains('qty-input')) return;
+      // Find item id: traverse to parent row or card
+      const row = input.closest('tr');
+      const card = input.closest('.card');
+      let itemId = null;
+      if (row && row.dataset.id) itemId = row.dataset.id;
+      else if (card) {
+        const idText = card.querySelector('.small.text-muted');
+        if (idText) {
+          const match = idText.textContent.match(/Course ID:\s*(.+)/i);
+          if (match) itemId = match[1].trim();
+        }
+      }
+      if (!itemId) return;
+      let newQty = parseInt(input.value, 10);
+      if (isNaN(newQty) || newQty < 1) newQty = 1;
+      setQty(itemId, newQty);
+    }
+
+    // Change quantity by delta (+1 or -1)
+    function changeQty(itemId, delta) {
+      const cart = loadCart();
+      const item = cart.find(i => i.id === itemId);
+      if (!item) return;
+      item.qty = Math.max(1, Number(item.qty) + delta);
+      item.total = +(item.qty * item.price).toFixed(2);
+      saveCart(cart);
+      refreshCartUI(); // rerender
+    }
+
+    // Set quantity to specific value
+    function setQty(itemId, qty) {
+      const cart = loadCart();
+      const item = cart.find(i => i.id === itemId);
+      if (!item) return;
+      item.qty = Math.max(1, Number(qty));
+      item.total = +(item.qty * item.price).toFixed(2);
+      saveCart(cart);
+      refreshCartUI();
+    }
+
+    // Remove item from cart
+    function removeItem(itemId) {
+      let cart = loadCart();
+      cart = cart.filter(i => i.id !== itemId);
+      saveCart(cart);
+      refreshCartUI();
+    }
+
+    // Clear cart
+    document.getElementById('clearCartBtn').addEventListener('click', function () {
+      if (!confirm('Clear all items from cart?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      refreshCartUI();
+    });
+
+    // Checkout button behavior (demo)
+    document.getElementById('checkoutBtn').addEventListener('click', function () {
+      const cart = loadCart();
+      if (!cart || cart.length === 0) {
+        alert('Your cart is empty. Add some courses first.');
+        return;
+      }
+      // In a real app, you would send cart to server/payment gateway.
+      // For demo: just clear cart and show a success message.
+      const totals = calculateTotals(cart);
+      if (confirm(`Proceed to checkout? Total payable: ₹${totals.grandTotal.toFixed(2)}`)) {
+        // simulate success
+        localStorage.removeItem(STORAGE_KEY);
+        alert('Checkout successful! Thank you for your purchase (demo).');
+        refreshCartUI();
+      }
+    });
+
+    // Initialize UI on page load
+    (function init() {
+      refreshCartUI();
+
+      // Make sure event listeners are attached only once: remove duplicates when reattaching
+      // (refreshCartUI creates new table/card elements; to avoid duplicate handlers we reassign)
+      // Note: We used addEventListener on parent nodes inside attachCartHandlers, so it's okay.
+    })();
+</script>
+
+<!-- Optional: shared script file -->
+<script src="script.js"></script>
+</body>
+</html>
+
+
+</body>
+</html>

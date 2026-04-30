@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login — SKILLNEXUS</title>
+    <meta name="description" content="Login to SKILLNEXUS — responsive login form using Bootstrap flexbox." />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">SKILLNEXUS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN: centered login card using flexbox -->
+<main class="flex-grow-1 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 mb-3 text-center">Sign in to your account</h2>
+                        <p class="text-muted small text-center mb-4">Login with your username or email. (Demo authentication)</p>
+
+                        <!-- Alert placeholder -->
+                        <div id="loginAlert" class="alert d-none" role="alert" aria-live="polite"></div>
+
+                        <!-- Login form: stacked on small, compact on larger screens -->
+                        <form id="loginForm" novalidate>
+                            <!-- Username or email -->
+                            <div class="mb-3">
+                                <label for="identifier" class="form-label">Username or email <span class="text-danger">*</span></label>
+                                <input type="text" id="identifier" name="identifier" class="form-control" required placeholder="username or you@example.com" autofocus>
+                                <div class="invalid-feedback">Please enter your username or email.</div>
+                            </div>
+
+                            <!-- Password with show/hide -->
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter password (if set during registration)">
+                                    <button type="button" id="toggleLoginPwd" class="btn btn-outline-secondary" aria-label="Show or hide password">Show</button>
+                                </div>
+                                <div class="form-text">If you registered with a password (production), enter it. Demo registrations may not include a password.</div>
+                            </div>
+
+                            <!-- Remember me + forgot -->
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <div>
+                                    <a href="register.html" class="link-primary small">Create account</a>
+                                    <span class="text-muted mx-1">|</span>
+                                    <a href="contact.html" class="link-secondary small">Need help?</a>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                                <button type="button" id="guestBtn" class="btn btn-outline-secondary">Continue as Guest</button>
+                            </div>
+                        </form>
+
+                        <!-- small note -->
+                        <div class="mt-3 small text-muted text-center">
+                            This is a demo authentication. In production, user passwords must be stored securely on a server and validated there.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extra quick links -->
+                <div class="text-center mt-3 small">
+                    <a href="index.html" class="link-secondary">Back to home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light py-3">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <small class="mb-2 mb-md-0">© <span id="year-login"></span> SKILLNEXUS. All rights reserved.</small>
+        <div class="d-flex gap-3">
+            <a href="index.html" class="text-light text-decoration-none">Home</a>
+            <a href="contact.html" class="text-light text-decoration-none">Contact</a>
+            <a href="register.html" class="text-light text-decoration-none">Register</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Page script: authentication logic -->
+<script>
+    // set footer year
+    document.getElementById('year-login').textContent = new Date().getFullYear();
+
+    (function () {
+      'use strict';
+
+      const STORAGE_USERS = 'lp_users';    // users saved by register.html
+      const STORAGE_SESSION = 'lp_session'; // demo session storage (keeps logged-in user)
+      const REMEMBER_KEY = 'lp_remember';  // persisting remembered identifier
+
+      const form = document.getElementById('loginForm');
+      const identifierInput = document.getElementById('identifier');
+      const pwdInput = document.getElementById('loginPassword');
+      const togglePwdBtn = document.getElementById('toggleLoginPwd');
+      const rememberCheckbox = document.getElementById('rememberMe');
+      const alertBox = document.getElementById('loginAlert');
+      const guestBtn = document.getElementById('guestBtn');
+
+      // Utility: show alert
+      function showAlert(type, msg) {
+        alertBox.className = '';
+        alertBox.classList.add('alert', 'alert-' + type);
+        alertBox.textContent = msg;
+        alertBox.classList.remove('d-none');
+      }
+
+      // Utility: hide alert
+      function hideAlert() {
+        alertBox.classList.add('d-none');
+      }
+
+      // Toggle password visibility
+      togglePwdBtn.addEventListener('click', function () {
+        if (pwdInput.type === 'password') {
+          pwdInput.type = 'text';
+          togglePwdBtn.textContent = 'Hide';
+        } else {
+          pwdInput.type = 'password';
+          togglePwdBtn.textContent = 'Show';
+        }
+      });
+
+      // Load remembered identifier (if any) and pre-check remember me
+      const remembered = localStorage.getItem(REMEMBER_KEY);
+      if (remembered) {
+        identifierInput.value = remembered;
+        rememberCheckbox.checked = true;
+      }
+
+      // Form submit handler
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        hideAlert();
+
+        const identifier = (identifierInput.value || '').trim();
+        const password = pwdInput.value || '';
+
+        if (!identifier) {
+          identifierInput.classList.add('is-invalid');
+          showAlert('danger', 'Please enter your username or email.');
+          return;
+        } else {
+          identifierInput.classList.remove('is-invalid');
+        }
+
+        // Load users from localStorage
+        const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
+
+        // Find user by username OR email
+        const user = users.find(u =>
+          (u.username && u.username.toLowerCase() === identifier.toLowerCase()) ||
+          (u.email && u.email.toLowerCase() === identifier.toLowerCase())
+        );
+
+        if (!user) {
+          showAlert('danger', 'No account found with that username or email. Please register first.');
+          return;
+        }
+
+        // If stored user has a password field, validate it
+        if (user.password) {
+          if (!password) {
+            showAlert('warning', 'This account requires a password. Please enter it.');
+            return;
+          }
+          // In demo: compare directly (NOT secure). In production always verify on server.
+          if (password !== user.password) {
+            showAlert('danger', 'Incorrect password. Try again.');
+            return;
+          }
+        } else {
+          // Demo mode: user object has no password stored
+          // Accept login but inform user
+          if (password) {
+            // user provided a password, but none saved — inform but proceed
+            showAlert('info', 'Demo account detected (no password saved). Signing in using username/email.');
+            // proceed
+          } else {
+            // no password provided and none stored — proceed quietly
+            hideAlert();
+          }
+        }
+
+        // Remember me: persist identifier if checked, else clear
+        if (rememberCheckbox.checked) {
+          localStorage.setItem(REMEMBER_KEY, identifier);
+        } else {
+          localStorage.removeItem(REMEMBER_KEY);
+        }
+
+        // Create a simple demo session object (not secure, client-side only) and save
+        const session = {
+          id: 's_' + Date.now(),
+          userId: user.id || user.username || user.email,
+          username: user.username || '',
+          email: user.email || '',
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem(STORAGE_SESSION, JSON.stringify(session));
+
+        // Successful login feedback and redirect to home
+        showAlert('success', 'Login successful! Redirecting to home...');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 900);
+      });
+
+      // Continue as Guest clears session and redirects
+      guestBtn.addEventListener('click', function () {
+        localStorage.removeItem(STORAGE_SESSION);
+        showAlert('info', 'Continuing as guest...');
+        setTimeout(() => window.location.href = 'index.html', 700);
+      });
+
+    })();
+</script>
+
+<!-- Link to global script file (optional) -->
+<script src="script.js"></script>
+</body>
+</html>
